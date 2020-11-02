@@ -45,15 +45,12 @@ ActiveRecord::Schema.define(version: 2020_11_02_144903) do
   end
 
   create_table "shows", force: :cascade do |t|
-    t.bigint "show_id", null: false
-    t.integer "season_number", null: false
+    t.string "name", null: false
     t.text "plot", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["show_id"], name: "index_shows_on_show_id"
   end
 
   add_foreign_key "episodes", "seasons"
   add_foreign_key "seasons", "shows"
-  add_foreign_key "shows", "shows"
 end
