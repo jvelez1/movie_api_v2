@@ -1,2 +1,2 @@
-class Movie < ApplicationRecord
+class Movie < VideoFootage
 end

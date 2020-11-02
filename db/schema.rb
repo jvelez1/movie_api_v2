@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_02_144903) do
+ActiveRecord::Schema.define(version: 2020_11_02_190330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,33 +24,15 @@ ActiveRecord::Schema.define(version: 2020_11_02_144903) do
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 
-  create_table "movies", force: :cascade do |t|
+  create_table "video_footages", force: :cascade do |t|
+    t.string "type", null: false
     t.string "name", null: false
     t.text "plot", null: false
-    t.integer "year", null: false
-    t.string "directed_by", null: false
-    t.string "production_company", null: false
-    t.string "country", null: false
+    t.integer "season_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["type"], name: "index_video_footages_on_type"
   end
 
-  create_table "seasons", force: :cascade do |t|
-    t.bigint "show_id", null: false
-    t.integer "season_number", null: false
-    t.text "plot", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["show_id"], name: "index_seasons_on_show_id"
-  end
-
-  create_table "shows", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "plot", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  add_foreign_key "episodes", "seasons"
-  add_foreign_key "seasons", "shows"
+  add_foreign_key "episodes", "video_footages", column: "season_id"
 end
