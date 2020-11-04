@@ -17,3 +17,39 @@ end
   )
   season.episodes.create!(episodes)
 end
+
+User.create(
+  [
+    {
+      full_name: 'Erick Mendoza',
+      email: 'Erick@correo.com'
+    },
+    {
+      full_name: 'Fabiola Borquez',
+      email: 'fabi@correo.com'
+    },
+    {
+      full_name: 'Eduardo Arenas',
+      email: 'eduardo@correo.com'
+    }
+  ]
+)
+
+Purchase.create(
+  [
+    {
+      user_id: User.first.id,
+      video_footage_id: Season.first.id,
+      expiry_date: DateTime.current + 1.day,
+      price: 2.5,
+      video_quality: 'HD'
+    },
+    {
+      user_id: User.first.id,
+      video_footage_id: Movie.first.id,
+      expiry_date: DateTime.current + 1.day,
+      price: 2.5,
+      video_quality: 'SD'
+    }
+  ]
+)
