@@ -1,0 +1,14 @@
+language: ruby
+cache: bundler
+dist: trusty
+rvm:
+ - 2.5.5
+addons:
+  postgresql: "9.4"
+before_install:
+ - gem install bundler --no-document
+ - bundle install
+script:
+ - bundle exec rake db:create
+ - bundle exec rake db:migrate
+ - bundle exec rspec

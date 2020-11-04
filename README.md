@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Ruby 2.5](https://img.shields.io/badge/ruby-2.5-blue.svg)](https://www.ruby-lang.org/en/news/2019/10/01/ruby-2-5-7-released/)
 
-Things you may want to cover:
+## Pre Prerequisites:
 
-* Ruby version
+- equired docker installed
 
-* System dependencies
+## RUN:
 
-* Configuration
+- docker-compose build
+- docker-compose run api rails db:create db:migrate db:seed
+- docker-compose up
 
-* Database creation
+## ROUTES:
 
-* Database initialization
+### Index Movies: GET
+> /movies
 
-* How to run the test suite
+### Index Seasons: GET
+> /seasons
 
-* Services (job queues, cache servers, search engines, etc.)
+### Index All media: GET
+> /video_footages
 
-* Deployment instructions
 
-* ...
+### Create Purchase: post
+> /purchases?user_id=1
+```ruby
+{
+    "video_footage_id": 3,
+    "price": 2.40,
+    "video_quality": "SD"
+}
+```
+
+## TEST:
+
+- docker-compose run api rails db:test:prepare
+- docker-compose run api rspec
