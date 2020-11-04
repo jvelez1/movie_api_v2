@@ -1,10 +1,11 @@
 # README
 
-[![Ruby 2.5](https://img.shields.io/badge/ruby-2.5-blue.svg)](https://www.ruby-lang.org/en/news/2019/10/01/ruby-2-5-7-released/)
+[![Ruby 2.7.1](https://img.shields.io/badge/ruby-2.7.1-blue.svg)](https://www.ruby-lang.org/es/news/2020/03/31/ruby-2-7-1-released/)
+
 
 ## Pre Prerequisites:
 
-- equired docker installed
+- Required docker installed
 
 ## RUN:
 
