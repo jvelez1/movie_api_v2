@@ -8,5 +8,7 @@ class CreatePurchases < ActiveRecord::Migration[6.0]
       t.string :video_quality, null: false, default: 'HD'
       t.timestamps
     end
+
+    add_index :purchases, [:user_id, :id], unique: true
   end
 end

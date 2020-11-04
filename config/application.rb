@@ -22,6 +22,7 @@ Bundler.require(*Rails.groups)
 module MovieApiV2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.autoload_paths += %W(#{config.root}/app/services)
     config.load_defaults 6.0
 
     # Settings in config/environments/* take precedence over those specified here.

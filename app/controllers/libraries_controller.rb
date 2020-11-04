@@ -3,7 +3,8 @@ class LibrariesController < ApplicationController
     render json: user.purchases
   end
 
-  private 
+  private
+
   def user
     @user = User.find_by(id: params[:user_id])
   rescue => _e

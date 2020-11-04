@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :movies, only: :index
   resources :seasons, only: :index
   resources :video_footages, only: :index
+  resources :purchases, only: :create
   get '/libraries/:user_id', to: 'libraries#index'
 end
