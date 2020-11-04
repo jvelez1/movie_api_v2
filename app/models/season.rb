@@ -1,6 +1,7 @@
 class Season < VideoFootage
-  has_many :episodes
-  accepts_nested_attributes_for :episodes
+  scope :ordered, -> { order(created_at: :asc) }
 
+  has_many :episodes, -> { ordered_by_episodes } 
   validates :season_number, presence: true
+  accepts_nested_attributes_for :episodes
 end

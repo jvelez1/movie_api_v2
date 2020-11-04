@@ -32,6 +32,9 @@ group :development, :test do
   gem 'database_cleaner', '~> 1.7.0'
   gem 'rspec-rails', '~> 3.9.0'
   gem 'faker', '~> 2.10', '>= 2.10.1'
+  gem "factory_bot_rails"
+  gem 'byebug'
+  gem 'awesome_print'
 end
 
 group :development do
