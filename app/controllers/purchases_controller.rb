@@ -13,12 +13,6 @@ class PurchasesController < ApplicationController
 
   private
 
-  def user
-    @user = User.find_by(id: params[:user_id])
-  rescue => _e
-    render status: :not_found
-  end
-
   def purchase_params
     params.permit(
       :video_footage_id,
