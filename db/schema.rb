@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_111415) do
+ActiveRecord::Schema.define(version: 2020_12_01_113119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "coupons", force: :cascade do |t|
     t.string "code", null: false
+    t.boolean "taken", default: false
     t.index ["code"], name: "index_coupons_on_code"
   end
 
@@ -42,6 +43,14 @@ ActiveRecord::Schema.define(version: 2020_12_01_111415) do
     t.index ["video_footage_id"], name: "index_purchases_on_video_footage_id"
   end
 
+  create_table "purchases_coupons", id: false, force: :cascade do |t|
+    t.bigint "purchase_id", null: false
+    t.bigint "coupon_id", null: false
+    t.index ["coupon_id"], name: "index_purchases_coupons_on_coupon_id"
+    t.index ["purchase_id", "coupon_id"], name: "index_purchases_coupons_on_purchase_id_and_coupon_id", unique: true
+    t.index ["purchase_id"], name: "index_purchases_coupons_on_purchase_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "full_name", null: false
     t.string "email", null: false
@@ -61,4 +70,6 @@ ActiveRecord::Schema.define(version: 2020_12_01_111415) do
 
   add_foreign_key "episodes", "video_footages", column: "season_id"
   add_foreign_key "purchases", "users"
+  add_foreign_key "purchases_coupons", "coupons"
+  add_foreign_key "purchases_coupons", "purchases"
 end
