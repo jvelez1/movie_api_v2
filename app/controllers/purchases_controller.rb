@@ -17,7 +17,8 @@ class PurchasesController < ApplicationController
     params.permit(
       :video_footage_id,
       :price,
-      :video_quality
+      :video_quality,
+      :code # coupon code
     )
   end
 end

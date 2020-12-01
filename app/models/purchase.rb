@@ -7,7 +7,7 @@ class Purchase < ApplicationRecord
   belongs_to :user
   belongs_to :video_footage
 
-  has_many :purchase_coupons
+  has_many :purchases_coupons
 
   validates :expiry_date, presence: true
 end

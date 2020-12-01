@@ -27,4 +27,27 @@ RSpec.describe PurchasesController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
+
+  context 'when valid coupon' do
+    let!(:coupon) { create(:coupon, code: 'COUPON2020', taken: false) }
+
+    it 'should be successful' do
+      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  context 'When invalid coupon' do
+    let!(:coupon) { create(:coupon, code: 'COUPON2020', taken: true) }
+
+    it 'returns an error' do
+      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(parsed_response).to include(
+        "base" => 'Ups! Invalid Coupon'
+      )
+    end
+  end
 end
