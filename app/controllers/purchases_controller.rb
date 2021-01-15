@@ -1,8 +1,9 @@
 class PurchasesController < ApplicationController
   def create
-    service = PurchaseCreator.new(user: user, params: purchase_params.to_h)
-    service.call
-    response = service.response
+    response = PurchaseCreator.new(
+      user: user,
+      params: purchase_params.to_h.deep_symbolize_keys
+    ).call
 
     if response.valid?
       render json: response.object

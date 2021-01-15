@@ -33,7 +33,6 @@ RSpec.describe PurchasesController, type: :controller do
 
     it 'should be successful' do
       post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
-
       expect(response).to have_http_status(:success)
     end
   end

@@ -9,11 +9,14 @@ class PurchaseCustomValidator < ActiveModel::Validator
   attr_reader :purchase, :coupon
 
   def validate_expire_date(record)
-    previous_expiry_date = record.expiry_date_was
+    if record.expiry_date_changed?
+      previous_expiry_date = record.expiry_date_was
+    end
+
     if previous_expiry_date && previous_expiry_date >= DateTime.current
       record.errors.add(:expiry_date, 'You already have this content available')
     end
-    true
+    record.errors.blank?
   end
 
   def validate_coupon_code(record)
