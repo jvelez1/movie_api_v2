@@ -10,4 +10,5 @@ class Purchase < ApplicationRecord
   has_many :purchases_coupons
 
   validates :expiry_date, presence: true
+  validates_with PurchaseCustomValidator
 end

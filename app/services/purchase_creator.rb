@@ -11,11 +11,8 @@ class PurchaseCreator
 
   def call
     purchase = find_or_initialize_purchase
-
-    return unless validate(purchase)
     purchase.expiry_date = DateTime.current + DAYS
     assign_coupon(purchase) if coupon
-
     if purchase.valid? && purchase.save!
       coupon.update(taken: true) if coupon # To implement
       successful(purchase)
@@ -47,29 +44,6 @@ class PurchaseCreator
 
   def successful(purchase)
     @response = OpenStruct.new(valid?: true, object: purchase)
-  end
-
-  def validate(purchase)
-    validate_expire_date(purchase) &&
-      validate_coupon_code
-  end
-
-  def validate_expire_date(purchase)
-    if purchase.expiry_date && purchase.expiry_date >= DateTime.current
-      assign_error({ base: 'You already have this content available' })
-      return false
-    end
-
-    true
-  end
-
-  def validate_coupon_code
-    if coupon&.taken?
-      assign_error({ base: 'Ups! Invalid Coupon' })
-      return false
-    end
-
-    true
   end
 
   def coupon

@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_113119) do
     t.index ["video_footage_id"], name: "index_purchases_on_video_footage_id"
   end
 
-  create_table "purchases_coupons", id: false, force: :cascade do |t|
+  create_table "purchases_coupons", force: :cascade do |t|
     t.bigint "purchase_id", null: false
     t.bigint "coupon_id", null: false
     t.index ["coupon_id"], name: "index_purchases_coupons_on_coupon_id"

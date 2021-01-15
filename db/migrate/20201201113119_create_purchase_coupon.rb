@@ -1,6 +1,6 @@
 class CreatePurchaseCoupon < ActiveRecord::Migration[6.0]
   def change
-    create_table :purchases_coupons, id: false do |t|
+    create_table :purchases_coupons do |t|
       t.belongs_to :purchase, foreign_key: true, null: false
       t.belongs_to :coupon, foreign_key: true, null: false
     end

@@ -22,7 +22,7 @@ RSpec.describe PurchasesController, type: :controller do
     it 'returns and error when there is a purchase' do
       post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD' }
       expect(parsed_response).to include(
-        "base" => 'You already have this content available'
+        "expiry_date" => ['You already have this content available']
       )
       expect(response).to have_http_status(:unprocessable_entity)
     end
@@ -42,11 +42,11 @@ RSpec.describe PurchasesController, type: :controller do
     let!(:coupon) { create(:coupon, code: 'COUPON2020', taken: true) }
 
     it 'returns an error' do
-      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
+      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: coupon.code }
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(parsed_response).to include(
-        "base" => 'Ups! Invalid Coupon'
+        "coupon" => ['Ups! Invalid Coupon']
       )
     end
   end
