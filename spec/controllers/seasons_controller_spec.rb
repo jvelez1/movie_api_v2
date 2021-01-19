@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SeasonsController, type: :controller do
+  let!(:user) { create(:user) }
   let!(:season_1) do
     create(:season) do |season|
       create_list(:episode, 5, season: season)
@@ -14,7 +15,7 @@ RSpec.describe SeasonsController, type: :controller do
   end
 
   it 'returns all seasons ordered including episodes' do
-    get :index
+    get :index, params: { user_id: user.id }
     expect(parsed_response[0]['episodes'].count).to eq(5)
     expect(parsed_response.pluck('id')).to match_array(
       [

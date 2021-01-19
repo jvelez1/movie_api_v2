@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_113119) do
+ActiveRecord::Schema.define(version: 2021_01_19_190652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.string "path", null: false
+    t.integer "counter", default: 0
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["path", "user_id"], name: "index_activity_logs_on_path_and_user_id", unique: true
+    t.index ["path"], name: "index_activity_logs_on_path"
+    t.index ["user_id"], name: "index_activity_logs_on_user_id"
+  end
 
   create_table "coupons", force: :cascade do |t|
     t.string "code", null: false
@@ -68,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_113119) do
     t.index ["type"], name: "index_video_footages_on_type"
   end
 
+  add_foreign_key "activity_logs", "users"
   add_foreign_key "episodes", "video_footages", column: "season_id"
   add_foreign_key "purchases", "users"
   add_foreign_key "purchases_coupons", "coupons"
