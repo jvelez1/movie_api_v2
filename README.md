@@ -1,6 +1,6 @@
 # README
 
-[![Ruby 2.7.1](https://img.shields.io/badge/ruby-2.7.1-blue.svg)](https://www.ruby-lang.org/es/news/2020/03/31/ruby-2-7-1-released/)
+[![Ruby 2.7.3](https://img.shields.io/badge/ruby-2.7.3-blue.svg)](https://www.ruby-lang.org/en/news/2021/04/05/ruby-2-7-3-released/)
 
 
 ## Pre Prerequisites:
