@@ -1,5 +1,5 @@
 class LibrariesController < ApplicationController
   def index
-    render json: user.purchases
+    render json: current_user.purchases
   end
 end

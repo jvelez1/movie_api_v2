@@ -21,16 +21,28 @@ end
 User.create(
   [
     {
+      full_name: 'admin',
+      email: 'admin@test.com',
+      password: '12345678',
+      password_confirmation: '12345678'
+    },
+    {
       full_name: 'Erick Mendoza',
-      email: 'Erick@correo.com'
+      email: 'erick@correo.com',
+      password: '12345678',
+      password_confirmation: '12345678'
     },
     {
       full_name: 'Fabiola Borquez',
-      email: 'fabi@correo.com'
+      email: 'fabi@correo.com',
+      password: '12345678',
+      password_confirmation: '12345678'
     },
     {
       full_name: 'Eduardo Arenas',
-      email: 'eduardo@correo.com'
+      email: 'eduardo@correo.com',
+      password: '12345678',
+      password_confirmation: '12345678'
     }
   ]
 )

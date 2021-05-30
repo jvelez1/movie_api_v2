@@ -14,8 +14,11 @@ RSpec.describe SeasonsController, type: :controller do
     end
   end
 
+  let(:auth_headers) { authenticated_header(user) }
+  before  { request.headers.merge(auth_headers) }
+
   it 'returns all seasons ordered including episodes' do
-    get :index, params: { user_id: user.id }
+    get :index
     expect(parsed_response[0]['episodes'].count).to eq(5)
     expect(parsed_response.pluck('id')).to match_array(
       [

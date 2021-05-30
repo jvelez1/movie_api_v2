@@ -22,11 +22,11 @@ class PurchaseCreator
     ActiveRecord::Base.transaction do
       if purchase.save!
         coupon.update!(taken: true) if coupon
-        successful(purchase)
+        build_response(purchase)
       end
     end
   rescue ActiveRecord::RecordInvalid
-    assign_error(purchase.errors)
+    build_response(purchase.errors, true)
   end
 
   def find_or_initialize_purchase
@@ -60,12 +60,12 @@ class PurchaseCreator
     end
   end
 
-  def assign_error(errors)
-    @response = OpenStruct.new(valid?: false, errors: errors)
-  end
-
-  def successful(purchase)
-    @response = OpenStruct.new(valid?: true, object: purchase)
+  def build_response(object, error = false)
+    @response = if error
+                  OpenStruct.new(valid?: false, errors: object)
+                else
+                  OpenStruct.new(valid?: true, object: object)
+                end
   end
 end
 

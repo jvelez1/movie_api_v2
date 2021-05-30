@@ -3,9 +3,12 @@ require 'rails_helper'
 RSpec.describe PurchasesController, type: :controller do
   let!(:movie) { create(:movie) }
   let!(:user) { create(:user) }
+  let(:auth_headers) { authenticated_header(user) }
+
+  before  { request.headers.merge(auth_headers) }
 
   it 'returns a new purchase' do
-    post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD' }
+    post :create, params: { video_footage_id: movie.id, price: 100, video_quality: 'HD' }
     expect(response).to have_http_status(:success)
   end
 
@@ -20,7 +23,7 @@ RSpec.describe PurchasesController, type: :controller do
     end
 
     it 'returns and error when there is a purchase' do
-      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD' }
+      post :create, params: { video_footage_id: movie.id, price: 100, video_quality: 'HD' }
       expect(parsed_response).to include(
         "expiry_date" => ['You already have this content available']
       )
@@ -32,7 +35,7 @@ RSpec.describe PurchasesController, type: :controller do
     let!(:coupon) { create(:coupon, code: 'COUPON2020', taken: false) }
 
     it 'should be successful' do
-      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
+      post :create, params: { video_footage_id: movie.id, price: 100, video_quality: 'HD', code: 'COUPON2020' }
       expect(response).to have_http_status(:success)
     end
   end
@@ -41,7 +44,7 @@ RSpec.describe PurchasesController, type: :controller do
     let!(:coupon) { create(:coupon, code: 'COUPON2020', taken: true) }
 
     it 'returns an error' do
-      post :create, params: { user_id: user.id, video_footage_id: movie.id, price: 100, video_quality: 'HD', code: coupon.code }
+      post :create, params: { video_footage_id: movie.id, price: 100, video_quality: 'HD', code: coupon.code }
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(parsed_response).to include(

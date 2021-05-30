@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   def create
     response = PurchaseCreator.new(
-      user: user,
+      user: current_user,
       params: purchase_params.to_h.deep_symbolize_keys
     ).call
 

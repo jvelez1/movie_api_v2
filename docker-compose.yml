@@ -15,6 +15,8 @@ services:
   api:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      DEVISE_JWT_SECRET_KEY: 21fa3502a16daa5a4dfb4daa91b27a64
     volumes:
       - .:/api
     ports:

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_190652) do
+ActiveRecord::Schema.define(version: 2021_05_30_085435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2021_01_19_190652) do
     t.index ["path", "user_id"], name: "index_activity_logs_on_path_and_user_id", unique: true
     t.index ["path"], name: "index_activity_logs_on_path"
     t.index ["user_id"], name: "index_activity_logs_on_user_id"
+  end
+
+  create_table "allowlisted_jwts", force: :cascade do |t|
+    t.string "jti", null: false
+    t.string "aud"
+    t.datetime "exp", null: false
+    t.boolean "otp_authenticated", default: false
+    t.bigint "user_id", null: false
+    t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
+    t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
   create_table "coupons", force: :cascade do |t|
@@ -67,6 +77,12 @@ ActiveRecord::Schema.define(version: 2021_01_19_190652) do
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "video_footages", force: :cascade do |t|
@@ -80,6 +96,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_190652) do
   end
 
   add_foreign_key "activity_logs", "users"
+  add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "episodes", "video_footages", column: "season_id"
   add_foreign_key "purchases", "users"
   add_foreign_key "purchases_coupons", "coupons"
