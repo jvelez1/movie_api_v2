@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 # require "sprockets/railtie"
 require "rails/test_unit/railtie"
+require_relative '../app/lib/activity_log_middleware'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,7 +23,6 @@ Bundler.require(*Rails.groups)
 module MovieApiV2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.autoload_paths += %W(#{config.root}/app/services)
     config.load_defaults 6.0
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -34,5 +34,6 @@ module MovieApiV2
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use ::ActivityLogMiddleware
   end
 end

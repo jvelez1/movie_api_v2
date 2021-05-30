@@ -54,12 +54,10 @@ class PurchaseCreator
   end
 
   def coupon
-    return @coupon if defined? @coupon
-
-    coupon_code = params[:code]
-    return unless coupon_code
-
-    @coupon = Coupon.find_by(code: coupon_code)
+    @coupon ||= begin
+      coupon_code = params[:code]
+      return Coupon.find_by(code: coupon_code) if coupon_code.present?
+    end
   end
 
   def assign_error(errors)
