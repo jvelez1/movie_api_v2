@@ -8,4 +8,8 @@ class User < ApplicationRecord
 
   has_many :activity_logs
   has_many :purchases, -> { active.expiry_date }
+
+  def self.find_by_token(token)
+    find(AllowlistedJwt.first_by_token(token).user_id) if token
+  end
 end

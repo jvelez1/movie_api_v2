@@ -5,13 +5,19 @@ class ActivityLogMiddleware
 
   def call(env)
     req = Rack::Request.new(env)
-    ActivityLog.transaction do
-      log = ActivityLog.find_or_create_by(path: req.path_info, user_id: req.params['user_id'])
-      log.lock!
-      log.increment!(:counter)
+    status, headers, response = @app.call(env)
+
+    token = headers['Authorization'] || req.fetch_header('HTTP_AUTHORIZATION')
+    user = User.find_by_token(token)
+
+    if user
+      ActivityLog.transaction do
+        log = ActivityLog.find_or_create_by(path: req.path_info, user_id: user.id)
+        log.lock!
+        log.increment!(:counter)
+      end
     end
 
-    status, headers, response = @app.call(env)
     [status, headers, response]
   end
 end

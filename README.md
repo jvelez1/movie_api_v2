@@ -15,17 +15,38 @@
 
 ## ROUTES:
 
+### Create Session: POST
+> /users/sign_in
+```ruby
+{
+    "user" : {
+        "email" : "admin@test.com",
+        "password" : "12345678"
+    }
+}
+```
+
+### All request must have the header 'Authorization'
+
 ### Index Movies: GET
+> headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9." }
+
 > /movies
 
 ### Index Seasons: GET
+> headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9." }
+
 > /seasons
 
 ### Index All media: GET
+> headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9." }
+
 > /video_footages
 
 
-### Create Purchase: post
+### Create Purchase: POST
+> headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9." }
+
 > /purchases?user_id=1
 ```ruby
 {

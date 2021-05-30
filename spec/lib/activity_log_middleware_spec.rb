@@ -4,19 +4,22 @@ require 'rails_helper'
 
 describe ActivityLogMiddleware do
   subject { described_class.new(app) }
-
+  
+  let(:user) { create(:user) }
+  let(:auth_headers) { authenticated_header(user) }
   let(:app) do
     lambda { |_env|
       [
         200,
         {
-          'Content-Type' => 'application/json'
+          'Content-Type' => 'application/json',
+          'Authorization' => auth_headers['Authorization']
         },
         ['OK']
       ]
     }
   end
-  let(:user) { create(:user) }
+
   let(:request) { Rack::MockRequest.new(subject) }
   let(:response) { request.get("/movies?user_id=#{user.id}") }
 
